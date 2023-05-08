@@ -308,7 +308,6 @@ const widthOT = computed(() => {
   return theme.compact ? '420px' : '50px';
 });
 const restpredDefault = (type) => {
-  console.log('type', type);
   if (type === 'mining') {
     config.restoreMinings();
   } else {

@@ -37,7 +37,7 @@
           </div>
         </div>
       </div>
-      <DSPElDialog :visible="dialogFormVisible" :clone="cloneProduct" :clickSelect="selectProduct"></DSPElDialog>
+      <DSPElDialog :visible="dialogFormVisible" :close="closeProduct" :clickSelect="selectProduct"></DSPElDialog>
       <!-- 配方详情列表内容 -->
       <div class="lists min-h-35">
         <div class="sticky top-0 z-99">
@@ -137,9 +137,7 @@
           <!-- 选择增产剂模式 -->
           <div class="production-model flex">
             <div
-              v-for="(option, index) in config.miningIncOptions[
-                get_item_recipe_choices(result.key)['additional_mode_index']
-              ]"
+              v-for="option in config.miningIncOptions[get_item_recipe_choices(result.key)['additional_mode_index']]"
               class="ml-2 bg-current cursor-pointer"
               :class="{ active: get_item_recipe_choices(result.key)['additional_mode'] == option.key }"
               :key="option"
@@ -170,7 +168,6 @@
           <div>总计需要的建筑:</div>
           <div v-for="building in Object.keys(recipeList.building_list)">
             <ProductImg width="22" :imgKey="building" class="inline-block" />
-            <!-- {{ building }} -->
             {{ DSP[building].name }} --- {{ recipeList.building_list[building] }} 个
           </div>
           <div>
@@ -202,13 +199,10 @@ import {
 } from '@/utils/calculate';
 const theme = useCounterStore();
 const config = useConfigStore();
-let showleft = ref(false);
-let productKey = ref('circuit_board');
 let dialogFormVisible = ref(false); //显示dialog 框
 const click = () => {
   // 点击切换侧边栏状态;
   theme.changeCompact();
-  console.log('theme', theme.compact);
 };
 
 const { t, availableLocales, locale } = useI18n();
@@ -238,17 +232,15 @@ const selectProduct = (selectItem) => {
 
   dialogFormVisible.value = false;
 };
-const cloneProduct = (type) => {
+const closeProduct = () => {
   calculate();
   dialogFormVisible.value = false;
 };
 // 当前选中的目标产物列表
-const productList = ref({
-  e_matrix: 60,
-});
+const productList = ref({});
 const obj = ref(false);
 //点击删除产物
-const delProduct = (key) => {
+const delProduct = (key: string) => {
   if (productList.value[key]) {
     delete productList.value[key];
   }
@@ -261,8 +253,6 @@ const facilityLabel = (list, key) => {
 };
 const recipeList = computed(() => {
   const data = calculate(productList.value);
-
-  console.log('obj', config.isChange);
   return data;
 });
 
@@ -273,6 +263,7 @@ const changeRecipeOf = (key, index) => {
   // const data = calculate(productList.value);
 };
 const changeRecipeRecipeChoices = (key, type, index) => {
+  console.log(key, type, index);
   set_item_recipe_choices(key, type, index);
   config.changeConfig();
 };
@@ -307,8 +298,6 @@ const change_energy = () => {
   background-color: #a1c7bf;
 }
 
-.lists li {
-}
 .list-content {
   border-bottom: solid 2px #444;
 }

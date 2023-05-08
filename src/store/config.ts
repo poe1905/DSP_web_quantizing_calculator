@@ -201,8 +201,6 @@ const config = defineStore({
       this.energy_contain_miner = 0;
     },
     change_energy_contain_miner() {
-      console.log('1111', this.energy_contain_miner);
-
       this.changeConfig();
       this.energy_contain_miner = this.energy_contain_miner ? 0 : 1;
     },
