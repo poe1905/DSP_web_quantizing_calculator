@@ -174,6 +174,8 @@ const config = defineStore({
   // pinia 放弃了 mutations 只使用 actions
   actions: {
     changeConfig() {
+      console.error('      this.isChange', this.isChange);
+
       this.isChange = !this.isChange;
     },
     restoreMinings() {

@@ -1470,6 +1470,7 @@ function recipe_to_html(recipe) {
 
 
 export const get_item_recipe_choices = (key) => {
+
   let recipe_id = item_data[key][scheme_data.item_recipe_choices[key]];
   const additional_level = scheme_data.scheme_for_recipe[recipe_id]["additional_level"]
   const additional_mode = scheme_data.scheme_for_recipe[recipe_id]["additional_mode"]

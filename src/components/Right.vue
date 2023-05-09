@@ -177,6 +177,7 @@
             >
           </div>
         </template>
+        <EnReadme class=""></EnReadme>
       </div>
     </div>
   </div>
@@ -253,6 +254,9 @@ const facilityLabel = (list, key) => {
 };
 const recipeList = computed(() => {
   const data = calculate(productList.value);
+  // TODO 这个 console  帮定了依赖项， 如果删除，则丢失，不能相应批量改变
+  console.log('数据发生改变，重新计算所有依赖', config.isChange);
+
   return data;
 });
 
